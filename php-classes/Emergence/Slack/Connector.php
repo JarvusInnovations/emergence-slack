@@ -18,8 +18,12 @@ class Connector extends AbstractConnector implements IIdentityConsumer
         handleRequest as handleIdentityConsumerRequest;
     }
 
+
+    public static $teamHost;
+
     public static $title = 'Slack';
     public static $connectorId = 'slack';
+
 
     public static function handleRequest($action = null)
     {
@@ -33,8 +37,9 @@ class Connector extends AbstractConnector implements IIdentityConsumer
     {
         $GLOBALS['Session']->requireAuthentication();
         
-        Site::redirect('https://'.API::$teamHost.'/sso/saml/start?redir=%2Fmessages%2F'.urlencode(!empty($_GET['channel']) ? $_GET['channel'] : 'general').'%2F');
+        Site::redirect('https://'.static::$teamHost.'/sso/saml/start?redir=%2Fmessages%2F'.urlencode(!empty($_GET['channel']) ? $_GET['channel'] : 'general').'%2F');
     }
+
 
     /**
     * IdentityConsumer interface methods

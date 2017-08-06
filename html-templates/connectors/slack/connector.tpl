@@ -12,10 +12,10 @@
         <h3>Configuration</h3>
 
         <dl>
-            <dt><code>Emergence\Slack\API::$teamHost</code></dt>
+            <dt><code>Emergence\Slack\Connector::$teamHost</code></dt>
             <dd>
-                {if Emergence\Slack\API::$teamHost}
-                    <q>{Emergence\Slack\API::$teamHost|escape}</q>
+                {if Emergence\Slack\Connector::$teamHost}
+                    <q>{Emergence\Slack\Connector::$teamHost|escape}</q>
                 {else}
                     <em>Not configured</em>
                 {/if}
@@ -27,8 +27,8 @@
     <section id="team">
         <h3>Slack Team</h3>
 
-        {if Emergence\Slack\API::$teamHost}
-            <a href="/connectors/slack/launch" class="button">Launch {Emergence\Slack\API::$teamHost|escape}</a>
+        {if Emergence\Slack\Connector::$teamHost}
+            <a href="/connectors/slack/launch" class="button">Launch {Emergence\Slack\Connector::$teamHost|escape}</a>
         {else}
             <em>No Slack team has been configured yet</em>
         {/if}
