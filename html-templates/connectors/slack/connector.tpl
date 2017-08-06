@@ -20,6 +20,24 @@
                     <em>Not configured</em>
                 {/if}
             </dd>
+
+            <dt><code>Emergence\Slack\API::$clientId</code></dt>
+            <dd>
+                {if Emergence\Slack\API::$clientId}
+                    <q>{Emergence\Slack\API::$clientId|escape}</q>
+                {else}
+                    <em>Not configured</em>
+                {/if}
+            </dd>
+
+            <dt><code>Emergence\Slack\API::$clientSecret</code></dt>
+            <dd>
+                {if Emergence\Slack\API::$clientSecret}
+                    <q>{Emergence\Slack\API::$clientSecret|escape}</q>
+                {else}
+                    <em>Not configured</em>
+                {/if}
+            </dd>
         </dl>
     </section>
     {/if}

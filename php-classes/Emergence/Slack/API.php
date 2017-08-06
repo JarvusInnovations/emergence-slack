@@ -4,5 +4,6 @@ namespace Emergence\Slack;
 
 class API
 {
-    public static $teamHost;
+    public static $clientId;
+    public static $clientSecret;
 }
