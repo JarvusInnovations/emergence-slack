@@ -2,6 +2,9 @@
 
 namespace Emergence\Slack;
 
+use Cache;
+
+
 class API
 {
     public static $clientId;
@@ -9,6 +12,9 @@ class API
     public static $verificationToken;
     public static $accessToken;
     public static $baseUrl = 'https://slack.com/api';
+
+    public static $channelsCacheKey = 'slack/channels';
+    public static $channelsCacheTime = 60;
 
     public static function getAccessToken()
     {
@@ -88,5 +94,37 @@ class API
         }
 
         return $result;
+    }
+
+    public static function getChannels($forceRefresh = false)
+    {
+        if ($forceRefresh || !($channels = Cache::fetch(static::$channelsCacheKey))) {
+            $channelsResponse = static::request('channels.list');
+
+            if (empty($channelsResponse['channels'])) {
+                throw new \Exception('Failed to parse channels response from Slack');
+            }
+
+            $channels = $channelsResponse['channels'];
+
+            Cache::store(static::$channelsCacheKey, $channels, static::$channelsCacheTime);
+        }
+
+        return $channels;
+    }
+
+    public static function getChannelId($name)
+    {
+        static $map;
+
+        if (!$map) {
+            $map = [];
+
+            foreach (static::getChannels() AS $channelData) {
+                $map[$channelData['name']] = $channelData['id'];
+            }
+        }
+
+        return array_key_exists($name, $map) ? $map[$name] : null;
     }
 }
