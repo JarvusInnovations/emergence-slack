@@ -38,6 +38,24 @@
                     <em>Not configured</em>
                 {/if}
             </dd>
+
+            <dt><code>Emergence\Slack\API::$verificationToken</code></dt>
+            <dd>
+                {if Emergence\Slack\API::$verificationToken}
+                    <q>{Emergence\Slack\API::$verificationToken|escape}</q>
+                {else}
+                    <em>Not configured</em>
+                {/if}
+            </dd>
+
+            <dt><code>Emergence\Slack\API::$accessToken</code></dt>
+            <dd>
+                {if Emergence\Slack\API::$accessToken}
+                    <q>{Emergence\Slack\API::$accessToken|escape}</q>
+                {else}
+                    <em>Not configured</em>
+                {/if}
+            </dd>
         </dl>
     </section>
     {/if}
