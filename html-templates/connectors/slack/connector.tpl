@@ -11,6 +11,7 @@
     <section id="configuration">
         <h3>Configuration</h3>
 
+        <h4>Slack Team</h4>
         <dl>
             <dt><code>Emergence\Slack\Connector::$teamHost</code></dt>
             <dd>
@@ -20,7 +21,11 @@
                     <em>Not configured</em>
                 {/if}
             </dd>
+        </dl>
 
+        <h4>Slack Application</h4>
+        <p>Create an app at <a href="https://api.slack.com/apps">https://api.slack.com/apps</a>
+        <dl>
             <dt><code>Emergence\Slack\API::$clientId</code></dt>
             <dd>
                 {if Emergence\Slack\API::$clientId}
@@ -57,6 +62,15 @@
                 {/if}
             </dd>
         </dl>
+
+        <h5>Enabling Events</h5>
+        <ol>
+            <li>Visit the <strong>Event Subscriptions</strong> section while managing the application</li>
+            <li>Set <strong>Request URL</strong> to <a href="{Emergence\Slack\Connector::getBaseUrl(true)}/webhooks">{Emergence\Slack\Connector::getBaseUrl(true)}/webhooks</a></li>
+            <li>Add all desired team events</li>
+            <li>Visit the <strong>Install App</strong> section while managing the application and follow the process to install the app to your team</li>
+            <li>Configure <code>Emergence\Slack\API::$accessToken</code> with the provided access token</li>
+        </ol>
     </section>
     {/if}
 
