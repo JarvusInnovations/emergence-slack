@@ -12,6 +12,12 @@ class API
     public static $verificationToken;
     public static $accessToken;
     public static $baseUrl = 'https://slack.com/api';
+    public static $scopes = [
+        'channels:read' => true,
+        'channels:write' => true,
+        'users:read' => true,
+        'team:read' => true
+    ];
 
     public static $channelsCacheKey = 'slack/channels';
     public static $channelsCacheTime = 60;
@@ -19,6 +25,11 @@ class API
     public static function getAccessToken()
     {
         return static::$accessToken;
+    }
+
+    public static function getScopes()
+    {
+        return array_keys(array_filter(static::$scopes));
     }
 
     public static function request($method, array $options = [])
