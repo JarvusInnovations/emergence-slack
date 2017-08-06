@@ -87,8 +87,7 @@ class API
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $options['method']);
             }
 
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($options['post']));
-            $options['headers'][] = 'Content-Type: application/json';
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $options['post']);
         }
 
         // configure headers
