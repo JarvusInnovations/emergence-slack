@@ -11,7 +11,7 @@ Enable an emergence site to integrate with a Slack team
 2. Copy `php-config/Git.config.d/emergence-slack.php` into your instance
 3. Visit **/site-admin/sources** and initialize the emergence-slack repository.
 4. Press **Sync->Update emergence VFS** for the emergence-slack repository to copy the contents into your instance
-5. Edit `php-config/Emergence/Slack/API.config.php` and configure `Emergence\Slack\API::$teamHost`
+5. Edit `php-config/Emergence/Slack/Connector.config.php` and configure `Emergence\Slack\Connector::$teamHost`
 6. Visit `https://mySlackOrg.slack.com/admin/auth/saml` to enable SAML SSO for Slack
 7. For the **SAML 2.0 Endpoint** setting, enter `https://myEmergenceSite.org/connectors/slack/login`
 8. Leave the **Identity Provider Issuer** setting blank
