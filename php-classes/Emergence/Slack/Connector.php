@@ -2,6 +2,8 @@
 
 namespace Emergence\Slack;
 
+use Exception;
+
 use Site;
 use JSON;
 
@@ -161,13 +163,15 @@ class Connector extends AbstractConnector implements IIdentityConsumer
 
     public static function getSAMLNameId(IPerson $Person)
     {
-        if ($Person->PrimaryEmail) {
-            return [
-                'Format' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
-                'Value' => $Person->Username
-            ];
+        if (!$Person->Username) {
+            throw new Exception('must have a username to connect to Slack');
         }
 
-        return static::getDefaultSAMLNameId($Person);
+        return [
+            'Format' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+            'NameQualifier' => static::$teamHost,
+            'SPNameQualifier' => 'https://slack.com',
+            'Value' => $Person->Username
+        ];
     }
 }
