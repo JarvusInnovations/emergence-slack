@@ -7,22 +7,13 @@ use Exception;
 use Site;
 use JSON;
 
-use Emergence\Connectors\AbstractConnector;
 use Emergence\Connectors\IIdentityConsumer;
-use Emergence\Connectors\IdentityConsumerTrait;
 use Emergence\EventBus;
 use Emergence\People\IPerson;
-use Emergence\SAML2\Connector AS SAML2Connector;
+use Emergence\SAML2\Connector as SAML2Connector;
 
-
-class Connector extends AbstractConnector implements IIdentityConsumer
+class Connector extends SAML2Connector implements IIdentityConsumer
 {
-    use IdentityConsumerTrait {
-        getSAMLNameId as getDefaultSAMLNameId;
-        handleRequest as handleIdentityConsumerRequest;
-    }
-
-
     public static $teamHost;
     public static $defaultChannel = 'general';
     public static $inviteAccountLevel = false;
@@ -44,7 +35,7 @@ class Connector extends AbstractConnector implements IIdentityConsumer
             case 'invite':
                 return static::handleInviteRequest();
             default:
-                return static::handleIdentityConsumerRequest($action);
+                return parent::handleRequest($action);
         }
     }
 
@@ -158,7 +149,7 @@ class Connector extends AbstractConnector implements IIdentityConsumer
             'Person' => $Person
         ]);
 
-        return SAML2Connector::handleLoginRequest($Person, __CLASS__);
+        return parent::handleLoginRequest($Person);
     }
 
     public static function getSAMLNameId(IPerson $Person)
