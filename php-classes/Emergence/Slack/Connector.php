@@ -16,7 +16,7 @@ class Connector extends SAML2Connector implements IIdentityConsumer
 {
     public static $teamHost;
     public static $defaultChannel = 'general';
-    public static $inviteAccountLevel = false;
+    public static $accountLevelInvite = false;
     public static $legacyToken; // obtain from https://api.slack.com/custom-integrations/legacy-tokens
 
     public static $title = 'Slack';
@@ -97,11 +97,11 @@ class Connector extends SAML2Connector implements IIdentityConsumer
     {
         global $Session;
 
-        if (!static::$inviteAccountLevel || !$Session) {
+        if (!static::$accountLevelInvite || !$Session) {
             return static::throwUnauthorizedError();
         }
 
-        $Session->requireAccountLevel(static::$inviteAccountLevel);
+        $Session->requireAccountLevel(static::$accountLevelInvite);
 
         if (!static::$legacyToken) {
             return static::throwError('Emergence\\Slack\\Connector::$legacyToken must be configured to send invites');
