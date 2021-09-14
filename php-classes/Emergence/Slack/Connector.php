@@ -17,6 +17,7 @@ class Connector extends SAML2Connector implements IIdentityConsumer
     public static $teamHost;
     public static $defaultChannel = 'general';
     public static $accountLevelInvite = false;
+    public static $accountLevelTest = 'Administrator';
     public static $legacyToken; // obtain from https://api.slack.com/custom-integrations/legacy-tokens
 
     public static $title = 'Slack';
@@ -34,6 +35,8 @@ class Connector extends SAML2Connector implements IIdentityConsumer
                 return static::handleAuthReturnRequest();
             case 'invite':
                 return static::handleInviteRequest();
+            case 'test':
+                return static::handleTestRequest();
             default:
                 return parent::handleRequest($action);
         }
@@ -138,6 +141,27 @@ class Connector extends SAML2Connector implements IIdentityConsumer
         return static::respond('message', [
             'message' => 'Invitation sent'
         ]);
+    }
+
+    public static function handleTestRequest()
+    {
+        global $Session;
+
+        if (!static::$accountLevelTest || !$Session) {
+            return static::throwUnauthorizedError();
+        }
+
+        $Session->requireAccountLevel(static::$accountLevelTest);
+
+        $request = [
+            'channel' => API::getChannelId('bot-debug'),
+            'text' => ':waving: Hello slack!',
+            'username' => Site::$title
+        ];
+        \Debug::dumpVar($request, false, 'request');
+
+        $response = API::request('chat.postMessage', [ 'post' => $request ]);
+        \Debug::dumpVar($response, true, 'response');
     }
 
     /**
