@@ -1,0 +1,8 @@
+[holomapping]
+files = [
+    "*/**",
+
+    # exclude CI and developer assets
+    "!.github/",
+    "!php-config/Git.config.d/",
+]
